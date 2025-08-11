@@ -25,6 +25,7 @@ def generate_launch_description():
 
     # 4. 节点配置
     nodes = [
+        # map->odom 静态坐标变换
         Node(
             package='tf2_ros',
             executable='static_transform_publisher',

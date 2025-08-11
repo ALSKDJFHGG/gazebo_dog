@@ -29,6 +29,13 @@ def generate_launch_description():
         )
     )
 
+    # 自定义 point2laser 转换
+    sample_point2laser_launch = launch.actions.IncludeLaunchDescription(
+        launch.launch_description_sources.PythonLaunchDescriptionSource(
+            get_package_share_directory('pointcloud_to_laserscan') + '/launch/sample_pointcloud_to_laserscan_launch.py'
+        )
+    )
+
     # map_server 地图
     map_file = os.path.join(get_package_share_directory('all_launch'), 'maps', 'gazebo_map.yaml')
     map_server_launch = Node(
@@ -48,6 +55,13 @@ def generate_launch_description():
         parameters=[{'use_sim_time': True},
                     {'autostart': True},
                     {'node_names': ['map_server']}]
+    )
+
+    # Cartographer 2D 建图
+    cartographer_2d_launch = launch.actions.IncludeLaunchDescription(
+        launch.launch_description_sources.PythonLaunchDescriptionSource(
+            get_package_share_directory('gazebo_cartographer') + '/launch/cartographer.launch.py'
+        )
     )
 
     # amcl 定位
@@ -80,16 +94,20 @@ def generate_launch_description():
         # 启动仿真
         launch.actions.TimerAction(period=0.5, actions=[gazebo_launch]),
         # 启动 point2laser 转换
-        launch.actions.TimerAction(period=1.5, actions=[point2laser_launch]),
+        # launch.actions.TimerAction(period=1.5, actions=[point2laser_launch]),
+        # 启动自定义 point2laser 转换
+        launch.actions.TimerAction(period=2.5, actions=[sample_point2laser_launch]),
         # 启动 lio-sam 算法
         launch.actions.TimerAction(period=10.5, actions=[lio_sam_launch]),
+        # 启动 Cartographer 2D 建图
+        # launch.actions.TimerAction(period=11.0, actions=[cartographer_2d_launch]),
         # 启动 map_server 地图
-        launch.actions.TimerAction(period=11.5, actions=[map_server_launch]),
-        launch.actions.TimerAction(period=12.5, actions=[lifecycle_manager_launch]),
+        # launch.actions.TimerAction(period=11.5, actions=[map_server_launch]),
+        # launch.actions.TimerAction(period=12.5, actions=[lifecycle_manager_launch]),
         # 启动 amcl 定位
-        launch.actions.TimerAction(period=13.5, actions=[amcl_node]),
+        # launch.actions.TimerAction(period=13.5, actions=[amcl_node]),
         # 启动生命循环节点
-        launch.actions.TimerAction(period=14.5, actions=[lifecycle_node]),
+        # launch.actions.TimerAction(period=14.5, actions=[lifecycle_node]),
     ])
 
 

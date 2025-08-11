@@ -1686,7 +1686,7 @@ public:
         tf2::convert(temp_odom_to_lidar, trans_odom_to_lidar);
         
         // 设置变换的子坐标系ID
-        trans_odom_to_lidar.child_frame_id = "lidar_link";
+        trans_odom_to_lidar.child_frame_id = "base_footprint";
         
         // 广播变换
         br->sendTransform(trans_odom_to_lidar);
