@@ -101,12 +101,11 @@ def generate_launch_description():
         launch.actions.TimerAction(period=10.5, actions=[lio_sam_launch]),
         # 启动 Cartographer 2D 建图
         # launch.actions.TimerAction(period=11.0, actions=[cartographer_2d_launch]),
-        # 启动 map_server 地图
+        # 启动 map_server 地图以及生命循环节点
         # launch.actions.TimerAction(period=11.5, actions=[map_server_launch]),
         # launch.actions.TimerAction(period=12.5, actions=[lifecycle_manager_launch]),
-        # 启动 amcl 定位
+        # 启动 amcl 定位以及生命循环节点
         # launch.actions.TimerAction(period=13.5, actions=[amcl_node]),
-        # 启动生命循环节点
         # launch.actions.TimerAction(period=14.5, actions=[lifecycle_node]),
     ])
 
